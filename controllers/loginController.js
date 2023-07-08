@@ -15,7 +15,7 @@ const loginController = async (req, res, next) => {
   const currentUser = usersDB.find((user) => user.username === username);
 
   if (!currentUser) {
-    return res.Status(400).json({ message: `${username} is not created` });
+    return res.sendStatus(400).json({ message: `${username} is not created` });
   }
 
   const matchedPassword = await brcypt.compare(password, currentUser.password);
@@ -25,9 +25,27 @@ const loginController = async (req, res, next) => {
       {
         username: currentUser.username,
       },
-      process.env.SECRET_KEY_TOKEN
+      process.env.SECRET_KEY_TOKEN,
+      { expiresIn: "20s" } //expires in 1 minute
     );
-    console.log(token)
+
+    const refreshToken = jwt.sign(
+      {
+        username: currentUser.username,
+      },
+      process.env.SECRET_KEY_REFRESH,
+      { expiresIn: "1d" } //expires in 1 minute
+    );
+    currentUser.refreshToken = refreshToken;
+
+    const newUserDB = usersDB.filter(
+      (user) => user.username !== currentUser.username
+    );
+    newUserDB.push(currentUser);
+    
+    await fsPromises.writeFile(path.join(__dirname,'..','models','users.json'),JSON.stringify(newUserDB))
+    
+    res.cookie('refresh_jwt',refreshToken)
     res.status(200).json(token);
   } else {
     res.sendStatus(401);
@@ -35,3 +53,6 @@ const loginController = async (req, res, next) => {
 };
 
 module.exports = loginController;
+
+
+
