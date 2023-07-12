@@ -6,13 +6,14 @@ const handleVerifyJWT = (req, res, next) => {
   const token = req.headers?.authorization?.split(" ")?.[1];
   if (!token) return res.sendStatus(401);
   try {
-    const { username } = jwt.verify(token, process.env.SECRET_KEY_TOKEN);
+    const { user: {username ,role } } = jwt.verify(token, process.env.SECRET_KEY_TOKEN);
 
     const currentUser = usersDB.find(user => user.username === username);
     if (!currentUser) return res.sendStatus(401);
+    req.role =role
     next();
   } catch (e) {
-    return res.sendStatus(401);
+    return res.sendStatus(401).json({ message: e.message});
   }
 };
 

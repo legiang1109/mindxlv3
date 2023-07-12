@@ -5,8 +5,8 @@ const getAllPerson = (req, res) => {
 };
 const createPerson = (req, res) => {
   const { name } = req.body;
-
-  res.json({ name });
+  res.send(json({ name }));
+  // res.json({ name });
 };
 const updatePerson = (req, res) => {
   const { name } = req.body;

@@ -23,7 +23,10 @@ const loginController = async (req, res, next) => {
   if (matchedPassword) {
     const token = jwt.sign(
       {
-        username: currentUser.username,
+        user: {
+          username: currentUser.username,
+          role: currentUser.role,
+        },
       },
       process.env.SECRET_KEY_TOKEN,
       { expiresIn: "20s" } //expires in 1 minute
@@ -34,7 +37,7 @@ const loginController = async (req, res, next) => {
         username: currentUser.username,
       },
       process.env.SECRET_KEY_REFRESH,
-      { expiresIn: "1d" } //expires in 1 minute
+      { expiresIn: "10m" } //expires in 1 minute
     );
     currentUser.refreshToken = refreshToken;
 
@@ -42,10 +45,13 @@ const loginController = async (req, res, next) => {
       (user) => user.username !== currentUser.username
     );
     newUserDB.push(currentUser);
-    
-    await fsPromises.writeFile(path.join(__dirname,'..','models','users.json'),JSON.stringify(newUserDB))
-    
-    res.cookie('refresh_jwt',refreshToken)
+
+    await fsPromises.writeFile(
+      path.join(__dirname, "..", "models", "users.json"),
+      JSON.stringify(newUserDB)
+    );
+
+    res.cookie("refresh_jwt", refreshToken);
     res.status(200).json(token);
   } else {
     res.sendStatus(401);
@@ -53,6 +59,3 @@ const loginController = async (req, res, next) => {
 };
 
 module.exports = loginController;
-
-
-

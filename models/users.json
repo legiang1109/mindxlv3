@@ -1,1 +1,20 @@
-[{"username":"giang","password":"$2b$05$7eKWYgoFHdxOJzuuG.0FLuZxmIZbFeSor.u4ALQij4dhvuqa3YMny"},{"username":"giang1","password":"$2b$05$kLSmilmNRNC3g0VvId0t1uzNWB6h0kRL38fFL.q6P59pYRbGRUYMq"},{"username":"giang2","password":"$2b$05$z9eYobd0lUZ2mhQhO1Xk6OJGqmax56.9ReKlG/eo.nM.uxyXFZzMm"},{"username":"giang4","password":"$2b$05$lAYcCyEzoR/0bqISeO7sZeLjQJs0wn8JwWbbr5xO1xF5dhyX/DLeO","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nNCIsImlhdCI6MTY4ODgzMjI4OSwiZXhwIjoxNjg4OTE4Njg5fQ.gLFF31CZXBo4_p7B69c87Lf8lrUIIe9qcikpP7lS7OU"}]
+[
+  {
+    "username": "giang1",
+    "password": "$2b$05$yO55WxLXRMaICA5zRpfGMedEVzT7lZOKAM8yQE1hk/NU963yG39C.",
+    "refreshToken": "",
+    "role": [100, 200]
+  },
+  {
+    "username": "giang4",
+    "password": "$2b$05$yO55WxLXRMaICA5zRpfGMedEVzT7lZOKAM8yQE1hk/NU963yG39C.",
+    "refreshToken": "",
+    "role": [100, 200]
+  },
+  {
+    "username": "giang",
+    "password": "$2b$05$yO55WxLXRMaICA5zRpfGMedEVzT7lZOKAM8yQE1hk/NU963yG39C.",
+    "refreshToken": "",
+    "role": [100, 200]
+  }
+]

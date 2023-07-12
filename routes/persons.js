@@ -5,20 +5,20 @@ const path = require("path");
 const fsPromises = require("fs/promises");
 const fs = require("fs");
 const {getAllPerson,createPerson,updatePerson,deletePerson} = require("../controllers/personControllers");
-const checkRequiredName = require("../middlewares/checkRequiredName");
+const verifyRole = require("../middlewares/verifyRole");
+const { ROLES } = require("../constants/roles");
 
 
 
-router.get("/", getAllPerson);
+router.get("/", verifyRole(ROLES.USER), getAllPerson);
 
-
-app.use(checkRequiredName);
+router.use(verifyRole(ROLES.ADMIN))
 router.post("/", createPerson)
 router.put("/", updatePerson)
 router.delete("/",deletePerson )
 
-router.get('/:name',(req,res) =>{
-    res.json({name: req.params.name})
-})
+// router.get('/:name',(req,res) =>{
+//     res.json({name: req.params.name})
+// })
 
 module.exports = router;

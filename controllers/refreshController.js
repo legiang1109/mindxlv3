@@ -1,5 +1,7 @@
 const usersDB = require("../models/users.json");
 const jwt = require("jsonwebtoken");
+
+
 const refreshController =(req,res,next) =>{
 
     const refresh_jwt = req.cookies?.refresh_jwt;
@@ -17,14 +19,17 @@ const refreshController =(req,res,next) =>{
         }
         const token = jwt.sign(
             {
-              username: currentUser.username,
+              user: {
+                username: currentUser.username,
+                role: currentUser.role,
+              },
             },
             process.env.SECRET_KEY_TOKEN,
-            { expiresIn: "20s" } //expires in 1 minute
+            { expiresIn: "10m" } //expires in 1 minute
           );
           res.json(token);
     }catch(e){
-
+      res.status(500).json({message: e.message})
     }
 
 }
